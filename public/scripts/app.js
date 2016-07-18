@@ -2,8 +2,6 @@
 
 /* end of hard-coded data */
 
-var sampleAlbums = [];
-
 var albumsTemplate;
 
 $(document).ready(function() {
