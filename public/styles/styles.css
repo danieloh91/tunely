@@ -14,3 +14,6 @@
   margin-right: 12px;
 }
 
+.delete-song {
+  background: rgba(255, 0, 0, 0.5);
+}

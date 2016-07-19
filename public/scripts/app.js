@@ -6,9 +6,7 @@ var albumsTemplate;
 
 $(document).ready(function() {
   var albumHtml = $('#album-template').html();
-  console.log(albumHtml);
   albumsTemplate = Handlebars.compile(albumHtml);
-  console.log(albumsTemplate);
   $.get('/api/albums').success(function(albums) {
     albums.forEach(function (album) {
       renderAlbum(album);
@@ -32,6 +30,12 @@ $(document).ready(function() {
     console.log('id',id);
     $('#songModal').data('album-id', id);
     $('#songModal').modal();
+  });
+
+  $('#albums').on('click', '.delete-song', function(e) {
+    console.log('add-song clicked!');
+    var id= $(this).closest('.album').data('album-id');
+    console.log('id',id);
   });
 
   $('#saveSong').on('click', handleNewSongSubmit);
@@ -74,6 +78,5 @@ function handleNewSongSubmit(e) {
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   var html = albumsTemplate(album);
-  console.log(html);
   $('#albums').prepend(html);
 }
