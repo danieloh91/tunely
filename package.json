@@ -19,7 +19,7 @@
   "homepage": "https://github.com/tgaff/tunely#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "bower": "^1.7.8",
+    "bower": "^1.7.9",
     "express": "^4.14.0"
   }
 }

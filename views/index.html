@@ -7,28 +7,17 @@
     <title>tunely</title>
 
     <!-- STYLESHEETS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
 
     <!-- VENDOR SCRIPTS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-    <!-- <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <script src="vendor/jQuery/dist/jquery.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendor/handlebars/handlebars.min.js"></script>
 
     <!-- APPLICATION SCRIPTS -->
     <script src="scripts/app.js"></script>
 
-    <!-- STYLESHEETS -->
-    <!-- <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/styles.css"> -->
-
-    <!-- VENDOR SCRIPTS -->
-    <!-- <script src="vendor/jQuery/dist/jquery.min.js"></script>
-    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="vendor/handlebars/handlebars.min.js"></script> -->
-
-    <!-- APPLICATION SCRIPTS -->
-    <!-- <script src="scripts/app.js"></script> -->
   </head>
   <body>
     <div class="jumbotron">
@@ -108,7 +97,7 @@
           <script id="album-template" type="text/x-handlebars-template">
             {{#each albums}}
             <!-- one album -->
-            <div class="row album">
+            <div class="row album" data-album-id="{{_id}}">
               <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -147,6 +136,7 @@
                     <!-- end of album internal row -->
 
                     <div class='panel-footer'>
+                      <button class='btn btn-primary add-song'>Add Song</button>
                     </div>
                   </div>
                 </div>

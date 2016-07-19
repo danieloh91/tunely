@@ -24,6 +24,13 @@ $(document).ready(function() {
     });
     $(this).trigger("reset");
   });
+  $('#albums').on('click', '.add-song', function(e) {
+    console.log('add-song clicked!');
+    var id= $(this).closest('.album').data('album-id');
+    console.log('id',id);
+    $('#songModal').data('album-id', id);
+    $('#songModal').modal();
+  });
 });
 
 function handleSuccess(json) {
