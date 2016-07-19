@@ -5,25 +5,27 @@
 var albumsTemplate;
 
 $(document).ready(function() {
-  $.ajax({
-    method: 'GET',
-    url: '/api/albums',
-    success: handleSuccess,
-    error: handleError
+  var albumHtml = $('#album-template').html();
+  console.log(albumHtml);
+  albumsTemplate = Handlebars.compile(albumHtml);
+  console.log(albumsTemplate);
+  $.get('/api/albums').success(function(albums) {
+    albums.forEach(function (album) {
+      renderAlbum(album);
+    });
   });
+
   $('.form-horizontal').on("submit", function(e) {
-    // e.preventDefault(e);
-    console.log($(this).serialize());
-    $.ajax({
-      method: 'POST',
-      url: '/api/albums',
-      data: $(this).serialize(),
-      dataType: 'json',
-      success: handleSuccess,
-      error: handleError
+    e.preventDefault(e);
+    var formData = $(this).serialize();
+    console.log('formData', formData);
+    $.post('/api/albums', formData, function(album) {
+      console.log('album after POST', album);
+      renderAlbum(album);
     });
     $(this).trigger("reset");
   });
+
   $('#albums').on('click', '.add-song', function(e) {
     console.log('add-song clicked!');
     var id= $(this).closest('.album').data('album-id');
@@ -69,21 +71,9 @@ function handleNewSongSubmit(e) {
 
 }
 
-function handleSuccess(json) {
-    sampleAlbums = json;
-    renderAlbum();
-}
-
-
-function handleError(e) {
-  console.log('uh oh');
-  $('#albums').text('Failed to load albums, is the server working?');
-}
-
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  var albumHtml = $('#album-template').html();
-  albumsTemplate = Handlebars.compile(albumHtml);
-  var html = albumsTemplate({albums: sampleAlbums});
+  var html = albumsTemplate(album);
+  console.log(html);
   $('#albums').prepend(html);
 }
