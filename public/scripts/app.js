@@ -31,7 +31,43 @@ $(document).ready(function() {
     $('#songModal').data('album-id', id);
     $('#songModal').modal();
   });
+
+  $('#saveSong').on('click', handleNewSongSubmit);
 });
+
+function handleNewSongSubmit(e) {
+  e.preventDefault();
+  var $modal = $('#songModal');
+  var $songNameField = $modal.find('#songName');
+  var $trackNumberField = $modal.find('#trackNumber');
+
+  // get data from modal fields
+  // note the server expects the keys to be 'name', 'trackNumber' so we use those.
+  var dataToPost = {
+    name: $songNameField.val(),
+    trackNumber: $trackNumberField.val()
+  };
+
+  var albumId = $modal.data('albumId');
+
+  //POST to the server
+  var songPostToServerUrl = '/api/albums/' + albumId + '/songs';
+  $.post(songPostToServerUrl, dataToPost, function(data) {
+    // clear the form
+    $songNameField.val('');
+    $trackNumberField.val('');
+
+    // hide the modal
+    $modal.modal('hide');
+    $.get('/api/albums/' + albumId, function(data) {
+      $('[data-album-id=' + albumId + ']').remove();
+      renderAlbum(data);
+    });
+  }).error(function(err) {
+    console.log('post to /api/albums/:albumId/songs resulted in error', err);
+  });
+
+}
 
 function handleSuccess(json) {
     sampleAlbums = json;

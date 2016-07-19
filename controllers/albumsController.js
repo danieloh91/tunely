@@ -31,6 +31,12 @@ function create(req, res) {
 
 function show(req, res) {
   // FILL ME IN !
+  db.Album.findById(req.params.albumId,  function (err, album) {
+    if (err) {
+      res.sendStatus(500);
+    }
+    res.json(album);
+  });
 }
 
 function destroy(req, res) {
