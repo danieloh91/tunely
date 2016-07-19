@@ -17,11 +17,11 @@ $(document).ready(function() {
     error: handleError
   });
 
-  $('#newAlbumForm').on("submit", function(e) {
-    e.preventDefault();
+  $('.form-horizontal').on("submit", function(e) {
+    e.preventDefault(e);
     console.log($(this).serialize());
+    $('.input-md').val('');
   });
-
 });
 
 
