@@ -40,14 +40,7 @@ app.get('/api', controllers.api.index);
 
 app.get('/api/albums', controllers.albums.index);
 
-app.post('/api/albums', function create_newalbum(req, res) {
-  db.Album.create(req.body, function(err, album){
-    if (err) {
-      res.sendStatus(404);
-    }
-    res.json(album);
-  });
-});
+app.post('/api/albums', controllers.albums.create);
 
 
 

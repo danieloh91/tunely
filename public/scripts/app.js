@@ -5,29 +5,30 @@
 var albumsTemplate;
 
 $(document).ready(function() {
-  // console.log('app.js loaded!');
-  // sampleAlbums.forEach(function(album) {
-  //   console.log(album);
-  //
-  // });
   $.ajax({
     method: 'GET',
     url: '/api/albums',
     success: handleSuccess,
     error: handleError
   });
-
   $('.form-horizontal').on("submit", function(e) {
-    e.preventDefault(e);
+    // e.preventDefault(e);
     console.log($(this).serialize());
-    $('.input-md').val('');
+    $.ajax({
+      method: 'POST',
+      url: '/api/albums',
+      data: $(this).serialize(),
+      dataType: 'json',
+      success: handleSuccess,
+      error: handleError
+    });
+    $(this).trigger("reset");
   });
 });
 
-
 function handleSuccess(json) {
-  sampleAlbums = json;
-  renderAlbum();
+    sampleAlbums = json;
+    renderAlbum();
 }
 
 
