@@ -7,6 +7,7 @@ var albumsTemplate;
 $(document).ready(function() {
   var albumHtml = $('#album-template').html();
   albumsTemplate = Handlebars.compile(albumHtml);
+  // show albums
   $.get('/api/albums').success(function(albums) {
     albums.forEach(function (album) {
       renderAlbum(album);
@@ -24,6 +25,7 @@ $(document).ready(function() {
     $(this).trigger("reset");
   });
 
+  // create a song
   $('#albums').on('click', '.add-song', function(e) {
     console.log('add-song clicked!');
     var id= $(this).closest('.album').data('album-id');
@@ -32,14 +34,25 @@ $(document).ready(function() {
     $('#songModal').modal();
   });
 
-  $('#albums').on('click', '.delete-song', function(e) {
+  $('#albums').on('click', '.delete-album', function(e) {
     console.log('add-song clicked!');
-    var id= $(this).closest('.album').data('album-id');
+    var id= $(this).parents('.album').data('album-id');
     console.log('id',id);
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/albums/' + id,
+      success: handleDeleteAlbumSuccess
+    });
   });
 
   $('#saveSong').on('click', handleNewSongSubmit);
 });
+
+function handleDeleteAlbumSuccess(data) {
+  var deletedAlbumId = data._id;
+  console.log(data._id);
+  $('div[data-album-id=' + deletedAlbumId + ']').remove();
+}
 
 function handleNewSongSubmit(e) {
   e.preventDefault();
